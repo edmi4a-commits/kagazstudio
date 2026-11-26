@@ -1,7 +1,8 @@
 // KumailDoc Studio — Admin Panel & Global Site Config Manager
 (function (global) {
   const CFG_KEY = "kagazstudio_site_cfg_v1";
-  const PIN_KEY = "kagazstudio_admin_pin_v1";
+  const PIN_KEY = "kagazstudio_admin_pin_v2";
+  const DEFAULT_PIN_HASH = "3979f942-14a09ff8";
   let currentCfg = null;
 
   const DEFAULT_CFG = {
@@ -17,8 +18,24 @@
     disabledTools: []
   };
 
-  function getPin() {
-    try { return (global.localStorage && global.localStorage.getItem(PIN_KEY)) || "kumail123"; } catch (_) { return "kumail123"; }
+  function hashPin(p) {
+    let h1 = 0x811c9dc5, h2 = 0x9e3779b9;
+    const s = "kagazstudio::" + p + "::v2";
+    for (let i = 0; i < s.length; i++) {
+      const c = s.charCodeAt(i);
+      h1 ^= c; h1 = Math.imul(h1, 0x01000193);
+      h2 ^= c + i; h2 = Math.imul(h2, 0x85ebca6b);
+    }
+    return (h1 >>> 0).toString(16).padStart(8, "0") + "-" + (h2 >>> 0).toString(16).padStart(8, "0");
+  }
+
+  function verifyPin(input) {
+    try {
+      const stored = global.localStorage && global.localStorage.getItem(PIN_KEY);
+      return hashPin(input) === (stored || DEFAULT_PIN_HASH);
+    } catch (_) {
+      return hashPin(input) === DEFAULT_PIN_HASH;
+    }
   }
 
   function loadConfigSync() {
@@ -80,14 +97,16 @@
     const drawLogin = () => {
       body.innerHTML = `
         <div class="form-group">
-          <label class="form-label">Enter Admin Password / PIN (Default: kumail123)</label>
-          <input class="input" id="admPinIn" type="password" placeholder="Enter PIN..." />
+          <label class="form-label">Enter Admin Password / PIN</label>
+          <input class="input" id="admPinIn" type="password" placeholder="Enter Admin PIN..." autocomplete="current-password" />
         </div>
         <button class="btn btn-primary" id="admLoginBtn">Unlock Admin Panel</button>`;
-      body.querySelector("#admLoginBtn").onclick = () => {
-        if (body.querySelector("#admPinIn").value === getPin()) drawDashboard();
+      const submitLogin = () => {
+        if (verifyPin(body.querySelector("#admPinIn").value)) drawDashboard();
         else toast("Incorrect Admin PIN!");
       };
+      body.querySelector("#admLoginBtn").onclick = submitLogin;
+      body.querySelector("#admPinIn").addEventListener("keydown", e => { if (e.key === "Enter") submitLogin(); });
     };
 
     const drawDashboard = () => {
@@ -127,7 +146,13 @@
       };
       body.querySelector("#acSave").onclick = () => {
         const np = body.querySelector("#acNewPin").value.trim();
-        if (np && global.localStorage) global.localStorage.setItem(PIN_KEY, np);
+        if (np) {
+          if (np.length < 6) {
+            toast("New PIN must be at least 6 characters!");
+            return;
+          }
+          if (global.localStorage) global.localStorage.setItem(PIN_KEY, hashPin(np));
+        }
         const updated = saveConfig({
           brandName: body.querySelector("#acBrand").value.trim() || "KumailDoc Studio",
           ownerCredit: body.querySelector("#acOwner").value.trim() || "Crafted & Owned by Kumail",
