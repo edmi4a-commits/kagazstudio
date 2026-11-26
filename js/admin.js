@@ -1,19 +1,19 @@
 // KumailDoc Studio — Admin Panel & Global Site Config Manager
 (function (global) {
-  const CFG_KEY = "kumaildoc_site_cfg_v1";
-  const PIN_KEY = "kumaildoc_admin_pin_v1";
+  const CFG_KEY = "kagazstudio_site_cfg_v1";
+  const PIN_KEY = "kagazstudio_admin_pin_v1";
   let currentCfg = null;
 
   const DEFAULT_CFG = {
-    brandName: "KumailDoc Studio",
+    brandName: "KagazStudio",
     brandTag: "PDF • Image • CSC Studio",
     heroChip: "✨ 60-in-1 Studio • Live A4 & Canvas Preview • 100% Free",
     heroTitle: "Every PDF, Image & CSC Tool in One Beautiful Studio",
     heroDesc: "Merge PDFs, compress photos to exact KB, print Passport & PVC A4 sheets, and generate instant GST Invoices & Resumes — right in your browser.",
-    ownerCredit: "Crafted & Owned by Kumail • KumailDoc Studio",
+    ownerCredit: "Crafted & Owned by Kumail • KagazStudio",
     ownerLink: "",
     announcementOn: false,
-    announcementText: "Welcome to KumailDoc Studio — 60+ Free PDF, Image & CSC Tools!",
+    announcementText: "Welcome to KagazStudio — 60+ Free PDF, Image & CSC Tools!",
     disabledTools: []
   };
 
