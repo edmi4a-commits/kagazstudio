@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KumailDoc Studio — All-in-One PDF, Image &amp; CSC Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="announceBar" class="announce-bar hidden"></div>
+  <!-- Top Sticky SaaS Navbar -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="brand" id="navHome">
+        <div class="brand-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>
+        </div>
+        <div>
+          <div class="brand-name" id="brandNameEl">KumailDoc Studio</div>
+          <div class="brand-tag" id="brandTagEl">PDF • Image • CSC Studio</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <button class="nav-pill active" data-cat="all">All 60 Tools</button>
+        <button class="nav-pill" data-cat="pdf">PDF Tools</button>
+        <button class="nav-pill" data-cat="image">Image &amp; Photo</button>
+        <button class="nav-pill" data-cat="csc">CSC &amp; Docs</button>
+        <button class="nav-pill" id="btnTheme" title="Toggle Dark/Light">🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home View -->
+  <main id="homeView">
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+        <span class="hero-chip" id="heroChipEl">✨ 60-in-1 Studio • Live A4 &amp; Canvas Preview • 100% Free</span>
+        <h1>Every <span class="grad-text">PDF, Image &amp; CSC</span> Tool<br/>in One Beautiful Studio</h1>
+        <p id="heroDescEl">Merge PDFs, compress photos to exact KB, print Passport &amp; PVC A4 sheets, and generate instant GST Invoices &amp; Resumes — right in your browser.</p>
+        <div class="search-wrap">
+          <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search 60 tools (Merge PDF, Compress 20KB, Passport Photo, Resume, QR...)" />
+          <button id="clearSearch" class="clear-btn hidden">✕</button>
+        </div>
+        <div class="quick-pills" id="quickPills">
+          <button class="q-pill" data-open="compress_kb">⚡ Compress to KB</button>
+          <button class="q-pill" data-open="passport_photo">🪪 Passport A4 Sheet</button>
+          <button class="q-pill" data-open="jpg_to_pdf">📄 JPG to PDF</button>
+          <button class="q-pill" data-open="pvc_id_sheet">💳 PVC Card A4</button>
+          <button class="q-pill" data-open="invoice_gen">🧾 GST Invoice</button>
+          <button class="q-pill" data-open="qr_generator">📱 QR Code</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="grid-header">
+        <h2 id="gridTitle">All 60 Tools</h2>
+        <span id="gridCount" class="count-pill">60 tools available</span>
+      </div>
+      <div id="toolsGrid" class="tools-grid"></div>
+    </section>
+  </main>
+
+  <!-- Active Tool Workspace -->
+  <section id="workspaceView" class="container workspace hidden">
+    <div class="ws-topbar">
+      <button id="btnBackHome" class="btn btn-outline btn-sm">← Back to All Tools</button>
+      <span id="wsCatBadge" class="cat-badge">PDF Tool</span>
+    </div>
+    <div class="ws-card">
+      <div class="ws-head">
+        <h1 id="wsTitle">Tool Name</h1>
+        <p id="wsDesc">Tool description</p>
+      </div>
+      <div id="wsBody" class="ws-body"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="owner-pill" id="ownerBadgeEl"><b>Crafted &amp; Owned by Kumail • KumailDoc Studio</b></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:6px;">All PDF, Image &amp; Document processing runs locally in your browser for maximum speed and privacy.</div>
+    <div style="margin-top:10px;"><button id="btnAdmin" class="btn btn-outline btn-sm">🔒 Admin Panel</button></div>
+  </footer>
+
+  <!-- Admin Panel Modal -->
+  <div id="adminModal" class="modal-backdrop hidden">
+    <div class="ws-card modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="font-size:18px;font-weight:900;">🔐 KumailDoc Admin Panel</h3>
+        <button id="admClose" class="btn btn-outline btn-sm">✕</button>
+      </div>
+      <div id="adminBody" style="overflow-y:auto;max-height:70vh;"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Core Scripts -->
+  <script src="js/pdf_lib_lite.js"></script>
+  <script src="js/qr_code.js"></script>
+  <script src="js/tools_catalog.js"></script>
+  <script src="js/engine_pdf.js"></script>
+  <script src="js/engine_image.js"></script>
+  <script src="js/engine_csc.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
